@@ -1,0 +1,59 @@
+# See https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
+
+## Build outputs
+obj/
+bin/
+out/
+
+## NuGet
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+.nuget/
+nuget.config
+
+## Visual Studio / Rider
+.vs/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.DotSettings
+*.DotSettings.user
+
+## Test results
+TestResults/
+coverage/
+*.trx
+*.coverage
+*.coveragexml
+*.cobertura.xml
+
+## Rider / ReSharper
+_ReSharper*/
+*.resharper
+*.ReSharper.user
+
+## macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+__MACOSX/
+
+## Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+## Editors
+*.swp
+*.swo
+*~
+
+## Publish / deploy artefacts
+publish/
+artifacts/
+nupkg/
