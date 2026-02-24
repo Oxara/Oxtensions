@@ -1,5 +1,7 @@
 # Oxtensions
 
+![Oxtensions](https://raw.githubusercontent.com/Oxara/Oxtensions/main/assets/oxtensions_banner.png)
+
 > High-performance, production-ready .NET extension methods library.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
