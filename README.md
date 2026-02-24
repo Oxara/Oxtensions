@@ -19,19 +19,19 @@ dotnet add package Oxtensions
 
 | Namespace | Class | Description |
 |-----------|-------|-------------|
-| `Oxtensions.String` | `StringExtensions` | [Slug, masking, casing, validation, safe parsing →](src/Oxtensions/String/README.md) |
-| `Oxtensions.Byte` | `ByteExtensions` | [Hex, Base64, MD5/SHA-256 hashing →](src/Oxtensions/Byte/README.md) |
-| `Oxtensions.Date` | `DateTimeExtensions` · `DateOnlyExtensions` · `DateTimeOffsetExtensions` | [Unix timestamps, boundaries, workday navigation, ISO 8601 →](src/Oxtensions/Date/README.md) |
-| `Oxtensions.Collections` | `ListExtensions` · `DictionaryExtensions` · `StackExtensions` · `QueueExtensions` | [Chunking, pagination, merge, query string, stack/queue bulk ops →](src/Oxtensions/Collections/README.md) |
-| `Oxtensions.Enum` | `EnumExtensions` | [Description/Display attribute, flags, safe parse →](src/Oxtensions/Enum/README.md) |
-| `Oxtensions.DataTable` | `DataTableExtensions` | [Typed mapping with reflection cache, JSON export →](src/Oxtensions/DataTable/README.md) |
-| `Oxtensions.Generic` | `GenericExtensions` | [Null guards, deep clone, JSON, IN predicate →](src/Oxtensions/Generic/README.md) |
-| `Oxtensions.Numeric` | `IntExtensions` · `LongExtensions` · `DoubleExtensions` · `DecimalExtensions` | [Sign, parity, clamp, prime, factorial, digits, rounding, currency →](src/Oxtensions/Numeric/README.md) |
-| `Oxtensions.Char` | `CharExtensions` | [Vowel/consonant, ASCII category, case and whitespace predicates →](src/Oxtensions/Char/README.md) |
-| `Oxtensions.Identifiers` | `GuidExtensions` | [IsEmpty, ToShortString, NewComb (time-ordered GUID) →](src/Oxtensions/Guid/README.md) |
-| `Oxtensions.Durations` | `TimeSpanExtensions` · `IntDurationExtensions` · `LongDurationExtensions` | [IsPositive/Negative/Zero, Abs, TotalWeeks, fluent builders →](src/Oxtensions/TimeSpan/README.md) |
-| `Oxtensions.Streams` | `StreamExtensions` · `ByteStreamExtensions` | [ToByteArray, Base64, ReadAllText, GZip compress/decompress →](src/Oxtensions/Stream/README.md) |
-| `Oxtensions.Async` | `TaskExtensions` | [FireAndForget, WithTimeout, WithCancellation, Retry →](src/Oxtensions/Async/README.md) |
+| `Oxtensions.String` | `StringExtensions` | [Slug, masking, casing, validation, safe parsing →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/String/README.md) |
+| `Oxtensions.Byte` | `ByteExtensions` | [Hex, Base64, MD5/SHA-256 hashing →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Byte/README.md) |
+| `Oxtensions.Date` | `DateTimeExtensions` · `DateOnlyExtensions` · `DateTimeOffsetExtensions` | [Unix timestamps, boundaries, workday navigation, ISO 8601 →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Date/README.md) |
+| `Oxtensions.Collections` | `ListExtensions` · `DictionaryExtensions` · `StackExtensions` · `QueueExtensions` | [Chunking, pagination, merge, query string, stack/queue bulk ops →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Collections/README.md) |
+| `Oxtensions.Enum` | `EnumExtensions` | [Description/Display attribute, flags, safe parse →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Enum/README.md) |
+| `Oxtensions.DataTable` | `DataTableExtensions` | [Typed mapping with reflection cache, JSON export →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/DataTable/README.md) |
+| `Oxtensions.Generic` | `GenericExtensions` | [Null guards, deep clone, JSON, IN predicate →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Generic/README.md) |
+| `Oxtensions.Numeric` | `IntExtensions` · `LongExtensions` · `DoubleExtensions` · `DecimalExtensions` | [Sign, parity, clamp, prime, factorial, digits, rounding, currency →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Numeric/README.md) |
+| `Oxtensions.Char` | `CharExtensions` | [Vowel/consonant, ASCII category, case and whitespace predicates →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Char/README.md) |
+| `Oxtensions.Identifiers` | `GuidExtensions` | [IsEmpty, ToShortString, NewComb (time-ordered GUID) →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Guid/README.md) |
+| `Oxtensions.Durations` | `TimeSpanExtensions` · `IntDurationExtensions` · `LongDurationExtensions` | [IsPositive/Negative/Zero, Abs, TotalWeeks, fluent builders →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/TimeSpan/README.md) |
+| `Oxtensions.Streams` | `StreamExtensions` · `ByteStreamExtensions` | [ToByteArray, Base64, ReadAllText, GZip compress/decompress →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Stream/README.md) |
+| `Oxtensions.Async` | `TaskExtensions` | [FireAndForget, WithTimeout, WithCancellation, Retry →](https://github.com/Oxara/Oxtensions/blob/main/src/Oxtensions/Async/README.md) |
 
 ---
 
