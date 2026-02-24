@@ -63,6 +63,14 @@ public sealed class TimeSpanExtensions_ToHumanReadableTests
     [Fact]
     public void ToHumanReadable_Zero_ReturnsZeroSeconds()
         => Ts.Zero.ToHumanReadable().Should().Be("0s");
+
+    [Fact]
+    public void ToHumanReadable_KnownDuration_ReturnsExpectedString()
+        => new Ts(1, 4, 30, 0).ToHumanReadable().Should().Be("1d 4h 30m 0s");
+
+    [Fact]
+    public void ToHumanReadable_HoursOnly_ReturnsExpectedString()
+        => Ts.FromHours(2.5d).ToHumanReadable().Should().Be("2h 30m 0s");
 }
 
 public sealed class TimeSpanExtensions_ToIso8601DurationTests
@@ -74,6 +82,14 @@ public sealed class TimeSpanExtensions_ToIso8601DurationTests
     [Fact]
     public void ToIso8601Duration_TwoHours_ContainsHours()
         => Ts.FromHours(2).ToIso8601Duration().Should().Contain("T");
+
+    [Fact]
+    public void ToIso8601Duration_KnownDuration_ReturnsExpectedString()
+        => Ts.FromDays(2).ToIso8601Duration().Should().Be("P2DT0H0M0S");
+
+    [Fact]
+    public void ToIso8601Duration_MinutesOnly_ReturnsExpectedString()
+        => Ts.FromMinutes(150).ToIso8601Duration().Should().Be("PT2H30M0S");
 }
 
 public sealed class IntDurationExtensions_FluentBuilderTests

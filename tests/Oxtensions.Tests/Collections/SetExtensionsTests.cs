@@ -189,4 +189,11 @@ public sealed class SetExtensionsTests
         var act = () => ((ISet<int>)null!).SymmetricDifference(new[] { 1 });
         act.Should().Throw<ArgumentNullException>();
     }
+
+    [Fact]
+    public void SymmetricDifference_NullOther_ThrowsArgumentNullException()
+    {
+        var act = () => new HashSet<int> { 1 }.SymmetricDifference(null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
 }

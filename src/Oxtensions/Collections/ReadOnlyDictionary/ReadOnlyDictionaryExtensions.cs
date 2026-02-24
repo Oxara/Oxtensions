@@ -6,8 +6,6 @@
 
 #nullable enable
 
-using System.Runtime.CompilerServices;
-
 namespace Oxtensions.Collections;
 
 /// <summary>
@@ -89,7 +87,6 @@ public static class ReadOnlyDictionaryExtensions
     /// var mutable = ro.ToDictionary();
     /// </code>
     /// </example>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(
         this IReadOnlyDictionary<TKey, TValue> source)
         where TKey : notnull

@@ -45,8 +45,15 @@ Predicates, arithmetic helpers, and human-readable formatting for `System.TimeSp
 ```csharp
 using Oxtensions.Durations;
 
+// IsPositive / IsNegative / IsZero — both cases
+TimeSpan.FromSeconds(5).IsPositive();      // true
+TimeSpan.FromSeconds(-5).IsPositive();     // false
 TimeSpan.FromSeconds(-5).IsNegative();     // true
-TimeSpan.FromSeconds(-5).Abs();            // 00:00:05
+TimeSpan.FromSeconds(5).IsNegative();      // false
+TimeSpan.Zero.IsZero();                    // true
+TimeSpan.FromSeconds(1).IsZero();          // false
+
+TimeSpan.FromSeconds(-5).Abs();  // 00:00:05
 TimeSpan.FromDays(14).TotalWeeks();        // 2.0
 TimeSpan.FromMinutes(150).ToHumanReadable();   // "2h 30m 0s"
 TimeSpan.FromDays(2).ToIso8601Duration();      // "P2DT0H0M0S"

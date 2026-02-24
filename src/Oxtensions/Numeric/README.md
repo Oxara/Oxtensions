@@ -24,6 +24,10 @@ Extension methods for `int`, `long`, `double`, and `decimal` — sign checks, pa
 | `Factorial()` | n! as `long` (0–20) |
 | `DigitCount()` | Number of digits in absolute value |
 | `ToDigits()` | Decompose into `int[]` of digits |
+| `ToOrdinal()` | Ordinal string: `1` → `"1st"`, `12` → `"12th"` |
+| `ToRoman()` | Roman numeral string: `4` → `"IV"`, `14` → `"XIV"` |
+| `IsMultipleOf(n)` | `true` if evenly divisible by `n` |
+| `Pow(exp)` | Integer exponentiation: `2.Pow(10)` → `1024` |
 
 ### `long`
 
@@ -36,6 +40,8 @@ Extension methods for `int`, `long`, `double`, and `decimal` — sign checks, pa
 | `Abs()` | Absolute value |
 | `DigitCount()` | Number of digits |
 | `ToDigits()` | Decompose into `int[]` of digits |
+| `IsMultipleOf(n)` | `true` if evenly divisible by `n` |
+| `Pow(exp)` | Long exponentiation: `2L.Pow(10)` → `1024L` |
 
 ### `double`
 
@@ -51,6 +57,10 @@ Extension methods for `int`, `long`, `double`, and `decimal` — sign checks, pa
 | `IsBetween(min, max)` | Inclusive range membership |
 | `Abs()` | Absolute value |
 | `RoundTo(decimals)` | Round with `MidpointRounding.AwayFromZero` |
+| `Lerp(a, b)` | Linear interpolation: `t.Lerp(a, b)` → `a + t*(b-a)` |
+| `Normalize(min, max)` | Scale value to `[0, 1]` range |
+| `ToRadians()` | Convert degrees to radians |
+| `ToDegrees()` | Convert radians to degrees |
 
 ### `decimal`
 
@@ -63,7 +73,9 @@ Extension methods for `int`, `long`, `double`, and `decimal` — sign checks, pa
 | `IsZero()` | `value == 0` |
 | `Clamp(min, max)` | Restrict to `[min, max]` |
 | `ToCurrencyString(culture?)` | Format as currency string; defaults to `CultureInfo.CurrentCulture` |
-| `AbsoluteValue()` | `Math.Abs(value)` |
+| `Abs()` | `Math.Abs(value)` |
+| `IsBetween(min, max)` | Inclusive range membership |
+| `ToNearest(step)` | Round to nearest multiple of `step` |
 
 ---
 
@@ -153,6 +165,56 @@ double.PositiveInfinity.IsPositive(); // false  (infinity excluded)
 123456L.ToDigits();   // [1, 2, 3, 4, 5, 6]
 ```
 
+### ToOrdinal & ToRoman
+
+```csharp
+1.ToOrdinal();    // "1st"
+2.ToOrdinal();    // "2nd"
+3.ToOrdinal();    // "3rd"
+11.ToOrdinal();   // "11th"
+21.ToOrdinal();   // "21st"
+
+1.ToRoman();      // "I"
+4.ToRoman();      // "IV"
+9.ToRoman();      // "IX"
+14.ToRoman();     // "XIV"
+2024.ToRoman();   // "MMXXIV"
+```
+
+### IsMultipleOf & Pow
+
+```csharp
+12.IsMultipleOf(4);     // true
+12.IsMultipleOf(5);     // false
+0.IsMultipleOf(7);      // true  (0 is multiple of everything)
+
+2.Pow(10);              // 1024
+3.Pow(3);               // 27
+5.Pow(0);               // 1
+
+2L.IsMultipleOf(2L);    // true
+2L.Pow(10);             // 1024L
+```
+
+### double Linear Interpolation & Angle Conversion
+
+```csharp
+// Lerp: a + t*(b-a)
+0.0d.Lerp(0d, 100d);    // 0.0
+0.5d.Lerp(0d, 100d);    // 50.0
+1.0d.Lerp(0d, 100d);    // 100.0
+
+// Normalize: scale to [0, 1]
+50d.Normalize(0d, 100d);    // 0.5
+0d.Normalize(0d, 100d);     // 0.0
+100d.Normalize(0d, 100d);   // 1.0
+
+// Angle conversion
+180d.ToRadians();           // Math.PI  (≈3.14159…)
+Math.PI.ToDegrees();        // 180.0
+90d.ToRadians().ToDegrees(); // 90.0  (round-trip)
+```
+
 ### double Predicates
 
 ```csharp
@@ -200,8 +262,16 @@ double.PositiveInfinity.IsFinite();// false
 1234.56m.ToCurrencyString("en-US"); // "$1,234.56"
 1234.56m.ToCurrencyString();        // uses current culture
 
-// AbsoluteValue
-(-42.5m).AbsoluteValue(); // 42.5m
+// Abs
+(-42.5m).Abs(); // 42.5m
+
+// IsBetween
+50m.IsBetween(0m, 100m);     // true
+150m.IsBetween(0m, 100m);    // false
+
+// ToNearest
+7.3m.ToNearest(0.5m);        // 7.5m
+10.1m.ToNearest(5m);         // 10m
 ```
 
 ---

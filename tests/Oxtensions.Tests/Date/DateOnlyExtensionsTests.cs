@@ -132,8 +132,16 @@ public sealed class DateOnlyExtensionsTests
         => System.DateOnly.FromDateTime(System.DateTime.Today).AddDays(-1).IsPast().Should().BeTrue();
 
     [Fact]
+    public void IsPast_Tomorrow_ReturnsFalse()
+        => System.DateOnly.FromDateTime(System.DateTime.Today).AddDays(1).IsPast().Should().BeFalse();
+
+    [Fact]
     public void IsFuture_Tomorrow_ReturnsTrue()
         => System.DateOnly.FromDateTime(System.DateTime.Today).AddDays(1).IsFuture().Should().BeTrue();
+
+    [Fact]
+    public void IsFuture_Yesterday_ReturnsFalse()
+        => System.DateOnly.FromDateTime(System.DateTime.Today).AddDays(-1).IsFuture().Should().BeFalse();
 
     // ── NextWorkday / PreviousWorkday ─────────────────────────────────────────
 

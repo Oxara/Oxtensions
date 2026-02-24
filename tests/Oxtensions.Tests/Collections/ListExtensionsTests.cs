@@ -102,6 +102,13 @@ public sealed class ListExtensionsTests
         act.Should().Throw<ArgumentNullException>();
     }
 
+    [Fact]
+    public void DistinctBy_NullKeySelector_ThrowsArgumentNullException()
+    {
+        var act = () => ListExtensions.DistinctBy(new[] { 1, 2 }, (Func<int, int>)null!).ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
+
     // ── ForEach ───────────────────────────────────────────────────────────────
 
     [Fact]
@@ -120,6 +127,20 @@ public sealed class ListExtensionsTests
         count.Should().Be(0);
     }
 
+    [Fact]
+    public void ForEach_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<int>)null!).ForEach(_ => { });
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void ForEach_NullAction_ThrowsArgumentNullException()
+    {
+        var act = () => new[] { 1 }.ForEach(null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
     // ── ToHashSet ─────────────────────────────────────────────────────────────
 
     [Fact]
@@ -129,6 +150,13 @@ public sealed class ListExtensionsTests
     [Fact]
     public void ToHashSet_Empty_ReturnsEmptySet()
         => ListExtensions.ToHashSet(Array.Empty<int>()).Should().BeEmpty();
+
+    [Fact]
+    public void ToHashSet_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ListExtensions.ToHashSet((IEnumerable<int>)null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
 
     // ── Paginate ──────────────────────────────────────────────────────────────
 
@@ -174,6 +202,20 @@ public sealed class ListExtensionsTests
         list.Should().Equal(1, 2, 3, 4);
     }
 
+    [Fact]
+    public void AddRangeIfNotExists_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((List<int>)null!).AddRangeIfNotExists(new[] { 1 });
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void AddRangeIfNotExists_NullItems_ThrowsArgumentNullException()
+    {
+        var act = () => new List<int>().AddRangeIfNotExists(null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
     // ── RemoveWhere ────────────────────────────────────────────────────────────
 
     [Fact]
@@ -191,6 +233,20 @@ public sealed class ListExtensionsTests
         var list = new List<int> { 1, 3, 5 };
         list.RemoveWhere(x => x % 2 == 0).Should().Be(0);
         list.Should().HaveCount(3);
+    }
+
+    [Fact]
+    public void RemoveWhere_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((List<int>)null!).RemoveWhere(x => x > 0);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void RemoveWhere_NullPredicate_ThrowsArgumentNullException()
+    {
+        var act = () => new List<int> { 1 }.RemoveWhere(null!);
+        act.Should().Throw<ArgumentNullException>();
     }
 
     // ── MinBy / MaxBy ──────────────────────────────────────────────────────────
@@ -212,6 +268,38 @@ public sealed class ListExtensionsTests
     [Fact]
     public void MinBy_EmptyList_ReturnsDefault()
         => ListExtensions.MinBy(Array.Empty<int>(), x => x).Should().Be(default);
+
+    [Fact]
+    public void MinBy_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ListExtensions.MinBy((IEnumerable<int>)null!, x => x);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void MinBy_NullKeySelector_ThrowsArgumentNullException()
+    {
+        var act = () => ListExtensions.MinBy(new[] { 1 }, (Func<int, int>)null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void MaxBy_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ListExtensions.MaxBy((IEnumerable<int>)null!, x => x);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void MaxBy_NullKeySelector_ThrowsArgumentNullException()
+    {
+        var act = () => ListExtensions.MaxBy(new[] { 1 }, (Func<int, int>)null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void MaxBy_EmptyList_ReturnsDefault()
+        => ListExtensions.MaxBy(Array.Empty<int>(), x => x).Should().Be(default);
 }
 
 public sealed class ListExtensions_FlattenTests
@@ -223,6 +311,13 @@ public sealed class ListExtensions_FlattenTests
     [Fact]
     public void Flatten_EmptyOuter_ReturnsEmpty()
         => Array.Empty<int[]>().Flatten().Should().BeEmpty();
+
+    [Fact]
+    public void Flatten_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<IEnumerable<int>>)null!).Flatten().ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class ListExtensions_RandomItemTests
@@ -239,6 +334,13 @@ public sealed class ListExtensions_RandomItemTests
     {
         var act = () => Array.Empty<int>().RandomItem();
         act.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public void RandomItem_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IList<int>)null!).RandomItem();
+        act.Should().Throw<ArgumentNullException>();
     }
 }
 
@@ -263,6 +365,13 @@ public sealed class ListExtensions_RandomItemsTests
     [Fact]
     public void RandomItems_CountZero_ReturnsEmpty()
         => new[] { 1, 2, 3 }.RandomItems(0).Should().BeEmpty();
+
+    [Fact]
+    public void RandomItems_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IList<int>)null!).RandomItems(1).ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class ListExtensions_RotateTests
@@ -290,6 +399,13 @@ public sealed class ListExtensions_RotateTests
         list.Rotate(3);
         list.Should().Equal(1, 2, 3);
     }
+
+    [Fact]
+    public void Rotate_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IList<int>)null!).Rotate(1);
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class ListExtensions_InterleaveTests
@@ -301,6 +417,20 @@ public sealed class ListExtensions_InterleaveTests
     [Fact]
     public void Interleave_UnequalLength_AppendsRemainder()
         => new[] { 1, 2 }.Interleave(new[] { 10, 20, 30 }).Should().Equal(1, 10, 2, 20, 30);
+
+    [Fact]
+    public void Interleave_NullFirst_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<int>)null!).Interleave(new[] { 1 }).ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void Interleave_NullSecond_ThrowsArgumentNullException()
+    {
+        var act = () => new[] { 1 }.Interleave(null!).ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class ListExtensions_CountByTests
@@ -312,6 +442,20 @@ public sealed class ListExtensions_CountByTests
         var result = words.CountBy(w => w.Length);
         result[1].Should().Be(2);
         result[2].Should().Be(2);
+    }
+
+    [Fact]
+    public void CountBy_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<string>)null!).CountBy(s => s.Length);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void CountBy_NullKeySelector_ThrowsArgumentNullException()
+    {
+        var act = () => new[] { "a" }.CountBy((Func<string, int>)null!);
+        act.Should().Throw<ArgumentNullException>();
     }
 }
 
@@ -332,6 +476,13 @@ public sealed class ListExtensions_NoneTests
     [Fact]
     public void None_NoPredicate_NonEmpty_ReturnsFalse()
         => new[] { 1 }.None().Should().BeFalse();
+
+    [Fact]
+    public void None_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<int>)null!).None();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class ListExtensions_HasDuplicatesTests
@@ -347,6 +498,13 @@ public sealed class ListExtensions_HasDuplicatesTests
     [Fact]
     public void HasDuplicates_Empty_ReturnsFalse()
         => Array.Empty<int>().HasDuplicates().Should().BeFalse();
+
+    [Fact]
+    public void HasDuplicates_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<int>)null!).HasDuplicates();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class ListExtensions_DuplicatesTests
@@ -361,4 +519,18 @@ public sealed class ListExtensions_DuplicatesTests
     [Fact]
     public void Duplicates_NoDuplicates_ReturnsEmpty()
         => new[] { 1, 2, 3 }.Duplicates(x => x).Should().BeEmpty();
+
+    [Fact]
+    public void Duplicates_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IEnumerable<int>)null!).Duplicates(x => x).ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void Duplicates_NullKeySelector_ThrowsArgumentNullException()
+    {
+        var act = () => new[] { 1, 1 }.Duplicates((Func<int, int>)null!).ToList();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }

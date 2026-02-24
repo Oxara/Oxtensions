@@ -50,6 +50,9 @@ public sealed class DateTimeOffsetExtensionsTests
     [Fact] public void IsWeekday_Monday_ReturnsTrue()
         => new System.DateTimeOffset(2026, 2, 23, 0, 0, 0, System.TimeSpan.Zero).IsWeekday().Should().BeTrue();
 
+    [Fact] public void IsWeekday_Saturday_ReturnsFalse()
+        => new System.DateTimeOffset(2026, 2, 21, 0, 0, 0, System.TimeSpan.Zero).IsWeekday().Should().BeFalse();
+
     // ── StartOfDay / EndOfDay ─────────────────────────────────────────────────
 
     [Fact]
@@ -159,8 +162,16 @@ public sealed class DateTimeOffsetExtensionsTests
         => System.DateTimeOffset.UtcNow.AddMinutes(-1).IsPast().Should().BeTrue();
 
     [Fact]
+    public void IsPast_FutureValue_ReturnsFalse()
+        => System.DateTimeOffset.UtcNow.AddMinutes(1).IsPast().Should().BeFalse();
+
+    [Fact]
     public void IsFuture_FutureValue_ReturnsTrue()
         => System.DateTimeOffset.UtcNow.AddMinutes(1).IsFuture().Should().BeTrue();
+
+    [Fact]
+    public void IsFuture_PastValue_ReturnsFalse()
+        => System.DateTimeOffset.UtcNow.AddMinutes(-1).IsFuture().Should().BeFalse();
 
     // ── NextWorkday / PreviousWorkday ─────────────────────────────────────────
 

@@ -42,6 +42,13 @@ public sealed class TaskExtensions_WithTimeoutTests
     }
 
     [Fact]
+    public async Task WithTimeout_NonGeneric_CompletesInTime_DoesNotThrow()
+    {
+        Func<Task> act = () => Task.CompletedTask.WithTimeout(System.TimeSpan.FromSeconds(5));
+        await act.Should().NotThrowAsync();
+    }
+
+    [Fact]
     public async Task WithTimeout_ExceedsTimeout_ThrowsTimeoutException()
     {
         var slowTask = Task.Delay(System.TimeSpan.FromSeconds(60));
@@ -145,5 +152,21 @@ public sealed class TaskExtensions_RetryTests
         };
         var result = await factory.Retry(maxAttempts: 3, delay: System.TimeSpan.FromMilliseconds(1));
         result.Should().Be(42);
+    }
+
+    [Fact]
+    public async Task Retry_ZeroAttempts_ThrowsArgumentException()
+    {
+        Func<Task> factory = () => Task.CompletedTask;
+        Func<Task> act = () => factory.Retry(maxAttempts: 0);
+        await act.Should().ThrowAsync<ArgumentException>();
+    }
+
+    [Fact]
+    public async Task RetryT_ZeroAttempts_ThrowsArgumentException()
+    {
+        Func<Task<int>> factory = () => Task.FromResult(0);
+        Func<Task> act = () => factory.Retry(maxAttempts: 0);
+        await act.Should().ThrowAsync<ArgumentException>();
     }
 }

@@ -68,7 +68,19 @@ public sealed class DictionaryExtensionsTests
         dict.GetOrAdd("n", k => k.Length);
         dict.Should().ContainKey("n");
     }
+    [Fact]
+    public void GetOrAdd_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, int>)null!).GetOrAdd("k", _ => 0);
+        act.Should().Throw<ArgumentNullException>();
+    }
 
+    [Fact]
+    public void GetOrAdd_NullFactory_ThrowsArgumentNullException()
+    {
+        var act = () => new Dictionary<string, int>().GetOrAdd("k", null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
     // ── Merge ─────────────────────────────────────────────────────────────────
 
     [Fact]
@@ -95,6 +107,13 @@ public sealed class DictionaryExtensionsTests
         act.Should().Throw<ArgumentNullException>();
     }
 
+    [Fact]
+    public void Merge_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, int>)null!).Merge(new Dictionary<string, int>());
+        act.Should().Throw<ArgumentNullException>();
+    }
+
     // ── ToQueryString ─────────────────────────────────────────────────────────
 
     [Fact]
@@ -116,7 +135,12 @@ public sealed class DictionaryExtensionsTests
         var dict = new Dictionary<string, string> { ["k"] = "hello world" };
         dict.ToQueryString().Should().Contain("hello%20world");
     }
-
+    [Fact]
+    public void ToQueryString_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, string>)null!).ToQueryString();
+        act.Should().Throw<ArgumentNullException>();
+    }
     // ── Invert ────────────────────────────────────────────────────────────────
 
     [Fact]
@@ -134,6 +158,13 @@ public sealed class DictionaryExtensionsTests
         var dict = new Dictionary<string, int> { ["a"] = 1, ["b"] = 1 };
         var act = () => dict.Invert();
         act.Should().Throw<ArgumentException>();
+    }
+
+    [Fact]
+    public void Invert_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, int>)null!).Invert();
+        act.Should().Throw<ArgumentNullException>();
     }
 }
 
@@ -153,6 +184,13 @@ public sealed class DictionaryExtensions_AddOrUpdateTests
         var dict = new Dictionary<string, int> { ["a"] = 1 };
         dict.AddOrUpdate("a", 99);
         dict["a"].Should().Be(99);
+    }
+
+    [Fact]
+    public void AddOrUpdate_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, int>)null!).AddOrUpdate("k", 1);
+        act.Should().Throw<ArgumentNullException>();
     }
 }
 
@@ -175,6 +213,20 @@ public sealed class DictionaryExtensions_RemoveWhereTests
         dict.RemoveWhere((_, v) => v < 0).Should().Be(0);
         dict.Should().HaveCount(1);
     }
+
+    [Fact]
+    public void RemoveWhere_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, int>)null!).RemoveWhere((_, _) => true);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void RemoveWhere_NullPredicate_ThrowsArgumentNullException()
+    {
+        var act = () => new Dictionary<string, int> { ["a"] = 1 }.RemoveWhere(null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
 }
 
 public sealed class DictionaryExtensions_ToJsonTests
@@ -191,4 +243,11 @@ public sealed class DictionaryExtensions_ToJsonTests
     [Fact]
     public void ToJson_EmptyDictionary_ReturnsEmptyJsonObject()
         => new Dictionary<string, int>().ToJson().Should().Be("{}");
+
+    [Fact]
+    public void ToJson_NullSource_ThrowsArgumentNullException()
+    {
+        var act = () => ((IDictionary<string, int>)null!).ToJson();
+        act.Should().Throw<ArgumentNullException>();
+    }
 }

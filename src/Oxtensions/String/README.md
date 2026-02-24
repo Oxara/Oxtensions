@@ -37,6 +37,11 @@ High-performance extension methods for `System.String` — Span-based null check
 | `RemoveHtmlTags()` | Strip HTML tags |
 | `ToBase64()` | UTF-8 → Base64 |
 | `FromBase64()` | Base64 → UTF-8 |
+| `SplitAndTrim(separator)` | Split by character and trim each part; empty segments removed |
+| `ContainsAny(values...)` | `true` if the string contains any of the given substrings |
+| `IfNullOrEmpty(fallback)` | Returns `fallback` when null or empty; otherwise original |
+| `IfNullOrWhiteSpace(fallback)` | Returns `fallback` when null, empty, or whitespace; otherwise original |
+| `CombineWith(parts...)` | Combines paths using `Path.Combine` |
 
 ---
 
@@ -163,6 +168,42 @@ Guid.NewGuid().ToString()
 "Hello, World!".ToBase64();       // "SGVsbG8sIFdvcmxkIQ=="
 "SGVsbG8=".FromBase64();          // "Hello"
 "!!!invalid!!!".FromBase64();     // ""  (graceful fallback)
+```
+
+### SplitAndTrim
+
+```csharp
+" a , b , c ".SplitAndTrim(',');     // ["a", "b", "c"]
+"a,,b".SplitAndTrim(',');            // ["a", "b"]  (empty segments removed)
+((string?)null).SplitAndTrim(',');   // []
+"hello".SplitAndTrim(',');           // ["hello"]
+```
+
+### ContainsAny
+
+```csharp
+"hello world".ContainsAny("foo", "world", "bar"); // true
+"hello world".ContainsAny("foo", "baz");           // false
+((string?)null).ContainsAny("foo");                 // false
+"hello".ContainsAny();                              // false
+```
+
+### IfNullOrEmpty / IfNullOrWhiteSpace
+
+```csharp
+((string?)null).IfNullOrEmpty("default");  // "default"
+"".IfNullOrEmpty("default");               // "default"
+"hello".IfNullOrEmpty("default");         // "hello"
+
+"   ".IfNullOrWhiteSpace("default");      // "default"
+"hello".IfNullOrWhiteSpace("default");    // "hello"
+```
+
+### CombineWith
+
+```csharp
+"base".CombineWith("sub", "file.txt");  // Path.Combine("base", "sub", "file.txt")
+"base".CombineWith();                   // "base"
 ```
 
 ---

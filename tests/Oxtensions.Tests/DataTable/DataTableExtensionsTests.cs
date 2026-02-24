@@ -96,6 +96,13 @@ public sealed class DataTableExtensionsTests
         empty.ToJson().Should().Be("[]");
     }
 
+    [Fact]
+    public void ToJson_NullTable_ThrowsArgumentNullException()
+    {
+        var act = () => ((System.Data.DataTable)null!).ToJson();
+        act.Should().Throw<ArgumentNullException>();
+    }
+
     // ── ToDictionary ──────────────────────────────────────────────────────────
 
     [Fact]
@@ -114,6 +121,20 @@ public sealed class DataTableExtensionsTests
         act.Should().Throw<ArgumentNullException>();
     }
 
+    [Fact]
+    public void ToDictionary_NullKeyColumn_ThrowsArgumentNullException()
+    {
+        var act = () => BuildPersonTable().ToDictionary<int, string>(null!, "Name");
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void ToDictionary_NullValueColumn_ThrowsArgumentNullException()
+    {
+        var act = () => BuildPersonTable().ToDictionary<int, string>("Id", null!);
+        act.Should().Throw<ArgumentNullException>();
+    }
+
     // ── ForEach ───────────────────────────────────────────────────────────────
 
     [Fact]
@@ -128,6 +149,13 @@ public sealed class DataTableExtensionsTests
     public void ForEach_NullTable_ThrowsArgumentNullException()
     {
         var act = () => ((System.Data.DataTable)null!).ForEach(_ => { });
+        act.Should().Throw<ArgumentNullException>();
+    }
+
+    [Fact]
+    public void ForEach_NullAction_ThrowsArgumentNullException()
+    {
+        var act = () => BuildPersonTable().ForEach(null!);
         act.Should().Throw<ArgumentNullException>();
     }
 

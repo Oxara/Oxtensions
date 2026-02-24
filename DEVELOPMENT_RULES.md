@@ -13,12 +13,15 @@
    - [4.3 Class independence — no intra-library dependencies](#43-class-independence--no-intra-library-dependencies)
    - [4.4 No third-party dependencies](#44-no-third-party-dependencies)
 5. [Method Rules](#5-method-rules)
+   - [5.5 Method naming — no abbreviations, fluent readability](#55-method-naming--no-abbreviations-fluent-readability)
 6. [Performance Annotations](#6-performance-annotations)
 7. [XML Documentation](#7-xml-documentation)
 8. [Type-Specific Rules](#8-type-specific-rules)
 9. [Argument Validation](#9-argument-validation)
 10. [Test Conventions](#10-test-conventions)
+    - [10.8 Required test coverage per method](#108-required-test-coverage-per-method)
 11. [README Requirements](#11-readme-requirements)
+    - [11.4 Per-method usage examples](#114-per-method-usage-examples)
 12. [Code Style](#12-code-style)
 13. [Changelog Maintenance](#13-changelog-maintenance)
 14. [Release & Publishing](#14-release--publishing)
@@ -264,6 +267,68 @@ Private helpers must not be extension methods (`this` parameter not allowed on p
   - `DateTime` boundary methods must preserve `DateTimeKind` by passing `value.Kind` to constructors.
   - `DateTimeOffset` boundary methods must preserve `value.Offset` by passing it to constructors.
 
+### 5.5 Method naming — no abbreviations, fluent readability
+
+Every extension method name must satisfy **both** of the following requirements:
+
+#### 5.5.1 No abbreviations
+
+Method names must use complete English words. Single-letter identifiers, initialisms, and non-standard contractions are forbidden in method names.
+
+| ❌ Forbidden | ✅ Required |
+|-------------|------------|
+| `CalcAvg()` | `CalculateAverage()` |
+| `GenId()` | `GenerateIdentifier()` |
+| `ChkNull()` | `CheckForNull()` |
+| `Fmt(string)` | `Format(string)` |
+| `ToStr()` | `ToString()` *(BCL override — permitted as-is)* |
+
+**Permitted exceptions** — well-known industry acronyms that every .NET developer recognises are allowed when they appear as a contiguous token within a larger name:
+
+| Permitted acronym | Example |
+|-------------------|---------|
+| `Json` | `ToJson()`, `FromJson()` |
+| `Xml` | `ToXml()` |
+| `Url` | `ToUrlEncoded()` |
+| `Guid` | `ToGuid()` |
+| `Utc` / `Iso` | `ToUtcString()`, `ToIso8601()` |
+| `Id` | `GenerateId()` *(only as a suffix, not a standalone abbreviation)* |
+| `Abs` | `Abs()` *(universally recognised math convention: `Math.Abs`, numpy, System.Math)* |
+
+Acronyms that are not in this list require approval and must be added here before use.
+
+#### 5.5.2 Fluent call-site readability
+
+Every method name must form a grammatically natural phrase when read together with the `this` parameter at the call site. The mental model is: **"[subject] [verb phrase]"**, where the subject is the extended type and the verb phrase is the method name.
+
+```csharp
+// ✅ Reads naturally
+value.IsWeekend()             // "the value is weekend"
+dict.ContainsAllKeys(keys)    // "the dict contains all keys"
+list.RemoveWhere(predicate)   // "the list remove-where predicate"
+timestamp.ToDateTime()        // "the timestamp to date-time"
+
+// ❌ Cryptic or grammatically broken
+value.WkEnd()                 // abbreviation + no verb structure
+dict.HaveKeys(keys)           // verb agreement broken
+list.DoRemoveIf(predicate)    // unnatural "Do" prefix
+timestamp.DtConvert()         // leading acronym + missing preposition
+```
+
+**Naming patterns to follow:**
+
+| Pattern | Meaning | Examples |
+|---------|---------|----------|
+| `Is{Condition}` | boolean predicate | `IsEmpty()`, `IsWeekend()`, `IsPrime()` |
+| `Has{Feature}` | boolean presence check | `HasValue()`, `HasItems()` |
+| `Contains{What}` | boolean membership | `ContainsAllKeys()`, `ContainsAnyKey()` |
+| `To{TargetType}` | type conversion | `ToDictionary()`, `ToList()`, `ToJson()` |
+| `From{SourceType}` | construction from source | `FromUnixTimestamp()` |
+| `Get{What}` | retrieval with optional fallback | `GetOrDefault()`, `GetOrAdd()` |
+| `Add{What}` / `Remove{What}` | mutation | `AddRange()`, `RemoveWhere()` |
+| `Filter{By/Where}` | subset projection | `FilterByKeys()`, `FilterWhere()` |
+| `{Verb}{Object}` | general action | `Shuffle()`, `Clamp()`, `Truncate()` |
+
 ---
 
 ## 6. Performance Annotations
@@ -447,6 +512,37 @@ Test classes must not hold mutable instance state. Use `private static readonly`
 private static readonly TimeSpan Utc3 = TimeSpan.FromHours(3);
 ```
 
+### 10.8 Required test coverage per method
+
+Every `public static` extension method must have, at minimum:
+
+| Test type | When required | Naming pattern |
+|-----------|--------------|----------------|
+| **Happy path** | Always — at least one test that exercises the normal, expected return value | `{Method}_{Scenario}_Returns{Expected}` |
+| **Null guard** | When the method has any reference-type or nullable parameter | `{Method}_Null{Param}_ThrowsArgumentNullException` |
+| **Invalid input** | When the method throws `ArgumentException` for illegal values (e.g. `min > max`, negative factorial) | `{Method}_{InvalidScenario}_ThrowsArgumentException` |
+| **Edge / boundary** | For methods with range, boundary, or special-value semantics | `{Method}_{EdgeCase}_Returns{Expected}` |
+
+**Rules:**
+- Boolean-returning (`Is*`, `Has*`, `Contains*`) methods must have at least one test for `true` and one for `false`.
+- Conversion methods (`To*`, `From*`) must include at least one **known-value round-trip or reference test**.
+- Tests that differ only by input value must use `[Theory]` + `[InlineData]` (see §10.4) rather than duplicate `[Fact]` methods.
+
+```csharp
+// ✅ Boolean method — both true and false covered
+[Fact] public void IsWeekend_Saturday_ReturnsTrue()  => ...
+[Fact] public void IsWeekend_Monday_ReturnsFalse()   => ...
+
+// ✅ Null guard
+[Fact] public void FilterByKeys_NullSource_ThrowsArgumentNullException() => ...
+
+// ✅ Invalid input
+[Fact] public void Clamp_MinGreaterThanMax_ThrowsArgumentException() => ...
+
+// ✅ Conversion — known reference value
+[Fact] public void ToUnixTimestamp_Epoch_ReturnsZero() => ...
+```
+
 ---
 
 ## 11. README Requirements
@@ -483,6 +579,37 @@ The root README must:
 - Contain a namespace/class table listing every available extension category with a link to its `README.md`.
 - Contain a **Quick Examples** section with at least one code snippet per category.
 - Use the correct, current namespace names (no stale references).
+
+### 11.4 Per-method usage examples
+
+Every method listed in a README's Methods table must have a corresponding code example in the `Usage Examples` section.
+
+**Rules:**
+- The example must show a **concrete call** with a literal or named input and a comment showing the expected output.
+- Boolean methods must show both a `true`-returning and a `false`-returning call.
+- Conversion methods must show the full input → output transformation.
+- Methods with edge-case behaviour (e.g. boundary values, empty input) must illustrate that case in addition to the happy path.
+- Multiple closely related methods (e.g. `IsPositive` / `IsNegative` / `IsZero`) may be grouped under a single example block.
+
+```markdown
+## Usage Examples
+
+### IsWeekend
+
+```csharp
+new DateTime(2024, 6, 1).IsWeekend(); // true  (Saturday)
+new DateTime(2024, 6, 3).IsWeekend(); // false (Monday)
+```
+
+### FilterByKeys
+
+```csharp
+var scores = new Dictionary<string, int> { ["a"] = 1, ["b"] = 2, ["c"] = 3 }
+    .AsReadOnly();
+scores.FilterByKeys(new[] { "a", "c" }); // { "a" => 1, "c" => 3 }
+scores.FilterByKeys(new[] { "z" });      // {} (no matching keys)
+```
+```
 
 ---
 
@@ -571,7 +698,7 @@ Each entry must follow this format:
 - `Oxtensions.Async` — new namespace containing `TaskExtensions` with `FireAndForget`, `WithTimeout`, `Retry`.
 
 ### Changed
-- `Oxtensions.Numeric.DecimalExtensions.Abs()` — renamed from `AbsoluteValue()` for consistency with `int` and `double` overloads.
+- `Oxtensions.Numeric.DecimalExtensions.Abs()` — reverted to `Abs()` (added to §5.5.1 permitted exceptions as a universally recognised math convention).
 
 ### Fixed
 - `Oxtensions.Streams.StreamExtensions.DecompressGzip()` — no longer throws on an already-disposed stream.

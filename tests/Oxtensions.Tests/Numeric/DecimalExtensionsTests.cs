@@ -105,7 +105,7 @@ public sealed class DecimalExtensionsTests
         act.Should().NotThrow();
     }
 
-    // ── Abs ────────────────────────────────────────────────────────────────────
+    // ── Abs ───────────────────────────────────────────────────────────────────
 
     [Fact]
     public void Abs_Negative_ReturnsPositive()

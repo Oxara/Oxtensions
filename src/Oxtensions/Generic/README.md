@@ -17,6 +17,9 @@ Universal helpers for any type `T` — null checks, guard clauses, membership te
 | `Clone<T>()` | Deep clone via JSON round-trip |
 | `ToJson<T>()` | Serialize to JSON string |
 | `FromJson<T>(json)` | Deserialize from JSON string |
+| `Pipe<T, TResult>(func)` | Apply a transformation function and return its result |
+| `Also<T>(action)` | Perform a side-effect and return the original value |
+| `IfNotNull<T>(action)` | Invoke `action` only when the value is non-null; returns original |
 
 ---
 
@@ -141,6 +144,42 @@ Logging example:
 
 ```csharp
 logger.LogDebug("Request payload: {Payload}", request.ToJson());
+```
+
+### Pipe
+
+```csharp
+// Apply a function and return the result
+string result = "hello world".Pipe(s => s.ToUpper()); // "HELLO WORLD"
+
+int doubled = 5.Pipe(x => x * 2); // 10
+
+// Chain transformations
+var processed = raw
+    .Pipe(Normalize)
+    .Pipe(Validate)
+    .Pipe(Save);
+```
+
+### Also
+
+```csharp
+// Side-effect (logging, auditing) without breaking a chain
+var order = repo.GetOrder(id)
+    .Also(o => logger.LogInformation("Loaded order {Id}", o.Id))
+    .Also(o => audit.Record(o));
+// 'order' is still the original Order object
+```
+
+### IfNotNull
+
+```csharp
+string? name = GetName(); // may be null
+
+name.IfNotNull(s => Console.WriteLine(s)); // only runs if name is not null
+
+// Useful in chains
+user?.Name.IfNotNull(n => logger.Log(n));
 ```
 
 ---

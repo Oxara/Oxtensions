@@ -106,6 +106,14 @@ public sealed class StringExtensionsTests
     public void ToKebabCase_MixedInput_ReturnsKebab()
         => "Hello World".ToKebabCase().Should().Be("hello-world");
 
+    [Fact]
+    public void ToTitleCase_StandardInput_ReturnsTitleCased()
+        => "hello world".ToTitleCase().Should().Be("Hello World");
+
+    [Fact]
+    public void ToTitleCase_NullInput_ReturnsEmpty()
+        => ((string?)null).ToTitleCase().Should().Be(string.Empty);
+
     [Theory]
     [InlineData("foo bar baz", "FooBarBaz")]
     [InlineData("foo_bar", "FooBar")]
@@ -220,13 +228,19 @@ public sealed class StringExtensionsTests
         => "not-a-url".IsValidUrl().Should().BeFalse();
 
     [Fact]
+    public void IsValidUrl_NullInput_ReturnsFalse()
+        => ((string?)null).IsValidUrl().Should().BeFalse();
+
+    [Fact]
     public void IsValidPhoneNumber_ValidPhone_ReturnsTrue()
         => "+90 532 000 0000".IsValidPhoneNumber().Should().BeTrue();
 
     [Fact]
     public void IsValidPhoneNumber_TooShort_ReturnsFalse()
         => "123".IsValidPhoneNumber().Should().BeFalse();
-
+    [Fact]
+    public void IsValidPhoneNumber_NullInput_ReturnsFalse()
+        => ((string?)null).IsValidPhoneNumber().Should().BeFalse();
     // ── Repeat ────────────────────────────────────────────────────────────────
 
     [Fact]
@@ -240,6 +254,13 @@ public sealed class StringExtensionsTests
     [Fact]
     public void Repeat_NullInput_ReturnsEmpty()
         => ((string?)null).Repeat(3).Should().Be(string.Empty);
+
+    [Fact]
+    public void Repeat_NegativeCount_ThrowsArgumentException()
+    {
+        var act = () => "ab".Repeat(-1);
+        act.Should().Throw<ArgumentException>();
+    }
 
     // ── ReverseWords / Reverse ────────────────────────────────────────────────
 
@@ -286,7 +307,17 @@ public sealed class StringExtensionsTests
     [Fact]
     public void Right_ValidLength_ReturnsTrimmed()
         => "Hello World".Right(5).Should().Be("World");
+    [Fact]
+    public void Left_NullInput_ReturnsEmpty()
+        => ((string?)null).Left(5).Should().Be(string.Empty);
 
+    [Fact]
+    public void Right_NullInput_ReturnsEmpty()
+        => ((string?)null).Right(5).Should().Be(string.Empty);
+
+    [Fact]
+    public void Right_ShorterThanLength_ReturnsOriginal()
+        => "Hi".Right(10).Should().Be("Hi");
     // ── HTML / Base64 ─────────────────────────────────────────────────────────
 
     [Fact]
@@ -303,6 +334,10 @@ public sealed class StringExtensionsTests
         const string original = "Hello, Dünya!";
         original.ToBase64().FromBase64().Should().Be(original);
     }
+
+    [Fact]
+    public void ToBase64_NullInput_ReturnsEmpty()
+        => ((string?)null).ToBase64().Should().Be(string.Empty);
 
     [Fact]
     public void FromBase64_InvalidInput_ReturnsEmpty()

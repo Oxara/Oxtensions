@@ -21,6 +21,15 @@ Extension methods for `System.Collections.Generic` types: `IList<T>`, `IDictiona
 | `RemoveWhere(predicate)` | Remove matching elements in-place |
 | `MinBy(selector)` | Element with minimum projected value |
 | `MaxBy(selector)` | Element with maximum projected value |
+| `Flatten()` | Flatten nested `IEnumerable<IEnumerable<T>>` into a single sequence |
+| `RandomItem()` | Returns a random element from the list |
+| `RandomItems(count)` | Returns `count` distinct random elements |
+| `Rotate(count)` | Rotates elements in-place (positive = left, negative = right) |
+| `Interleave(second)` | Interleaves two sequences element-by-element |
+| `CountBy(keySelector)` | Groups and counts elements by key — returns `Dictionary<TKey, int>` |
+| `None(predicate?)` | `true` when no element satisfies the predicate (or list is empty) |
+| `HasDuplicates()` | `true` when at least two elements are equal |
+| `Duplicates(keySelector)` | Returns only the duplicate elements by key |
 
 > **Note — .NET 6+ name conflicts:** `DistinctBy`, `ToHashSet`, `MinBy`, and `MaxBy` also exist in `System.Linq.Enumerable`. Call them as static methods to use the Oxtensions versions explicitly:
 > ```csharp
@@ -90,6 +99,51 @@ ListExtensions.DistinctBy(products, p => p.Id);
 
 // RemoveWhere
 myList.RemoveWhere(x => x < 0); // removes all negatives in-place
+
+// ForEach
+new[] { 1, 2, 3 }.ForEach(Console.WriteLine);
+
+// ToHashSet
+ListExtensions.ToHashSet(new[] { 1, 1, 2, 3, 3 }); // { 1, 2, 3 }
+
+// AddRangeIfNotExists
+var list = new List<int> { 1, 2 };
+list.AddRangeIfNotExists(new[] { 2, 3, 4 }); // list = [1, 2, 3, 4]
+
+// MinBy / MaxBy
+var items = new[] { (Id: 3, Name: "c"), (Id: 1, Name: "a"), (Id: 2, Name: "b") };
+ListExtensions.MinBy(items, x => x.Id); // (1, "a")
+ListExtensions.MaxBy(items, x => x.Id); // (3, "c")
+
+// Flatten
+new[] { new[] { 1, 2 }, new[] { 3, 4 } }.Flatten(); // [1, 2, 3, 4]
+
+// RandomItem / RandomItems
+new[] { 1, 2, 3, 4, 5 }.RandomItem();     // one of: 1, 2, 3, 4, 5
+new[] { 1, 2, 3, 4, 5 }.RandomItems(3);  // 3 distinct elements
+
+// Rotate (in-place)
+var rot = new List<int> { 1, 2, 3, 4, 5 };
+rot.Rotate(2);   // [3, 4, 5, 1, 2]
+rot.Rotate(-1);  // [2, 3, 4, 5, 1]
+
+// Interleave
+new[] { 1, 2, 3 }.Interleave(new[] { 10, 20, 30 }); // [1, 10, 2, 20, 3, 30]
+
+// CountBy
+new[] { "a", "bb", "cc", "d" }.CountBy(w => w.Length);
+// { 1 => 2, 2 => 2 }
+
+// None
+new[] { 1, 2, 3 }.None(x => x < 0);  // true  (no negatives)
+new[] { 1, -2, 3 }.None(x => x < 0); // false (-2 exists)
+
+// HasDuplicates
+new[] { 1, 2, 2, 3 }.HasDuplicates(); // true
+new[] { 1, 2, 3 }.HasDuplicates();    // false
+
+// Duplicates
+new[] { 1, 2, 2, 3, 3, 3 }.Duplicates(x => x); // [2, 3]
 ```
 
 ### DictionaryExtensions
@@ -113,6 +167,19 @@ var byValue = dict.Invert(); // values become keys
 
 // RemoveWhere
 int removed = dict.RemoveWhere((k, v) => v < 0); // returns count
+
+// IsNullOrEmpty
+((IDictionary<string, int>?)null).IsNullOrEmpty(); // true
+new Dictionary<string, int>().IsNullOrEmpty();     // true
+new Dictionary<string, int> { ["a"] = 1 }.IsNullOrEmpty(); // false
+
+// AddOrUpdate
+dict.AddOrUpdate("newKey", 42);  // inserts when absent
+dict.AddOrUpdate("newKey", 99);  // updates when present
+
+// ToJson
+new Dictionary<string, int> { ["a"] = 1, ["b"] = 2 }.ToJson();
+// {"a":1,"b":2}
 ```
 
 ### StackExtensions
@@ -355,7 +422,6 @@ Extension methods for `IReadOnlyDictionary<TKey, TValue>`.
 
 | Method | Description |
 |--------|-------------|
-
 | `ContainsAllKeys(keys)` | `true` only when every supplied key is present |
 | `ContainsAnyKey(keys)` | `true` when at least one supplied key is present |
 | `ToDictionary()` | Creates a mutable `Dictionary<TKey, TValue>` copy |

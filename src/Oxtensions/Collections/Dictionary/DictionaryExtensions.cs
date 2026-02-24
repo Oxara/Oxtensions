@@ -253,8 +253,10 @@ public static class DictionaryExtensions
     /// <typeparam name="TValue">Value type.</typeparam>
     /// <param name="source">The dictionary to serialize.</param>
     /// <returns>JSON representation.</returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static string ToJson<TKey, TValue>(this IDictionary<TKey, TValue> source)
         where TKey : notnull
-        => System.Text.Json.JsonSerializer.Serialize(source);
+    {
+        ArgumentNullException.ThrowIfNull(source);
+        return System.Text.Json.JsonSerializer.Serialize(source);
+    }
 }

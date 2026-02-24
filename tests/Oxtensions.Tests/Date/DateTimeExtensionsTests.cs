@@ -51,6 +51,10 @@ public sealed class DateTimeExtensionsTests
     public void IsWeekday_Monday_ReturnsTrue()
         => new SysDateTime(2026, 2, 23).IsWeekday().Should().BeTrue();
 
+    [Fact]
+    public void IsWeekday_Saturday_ReturnsFalse()
+        => new SysDateTime(2026, 2, 21).IsWeekday().Should().BeFalse();
+
     [Theory]
     [InlineData(2026, 2, 21, true)]  // Saturday
     [InlineData(2026, 2, 22, true)]  // Sunday
@@ -194,8 +198,16 @@ public sealed class DateTimeExtensionsTests
         => SysDateTime.UtcNow.AddMinutes(-1).IsPast().Should().BeTrue();
 
     [Fact]
+    public void IsPast_FutureDate_ReturnsFalse()
+        => SysDateTime.UtcNow.AddMinutes(1).IsPast().Should().BeFalse();
+
+    [Fact]
     public void IsFuture_FutureDate_ReturnsTrue()
         => SysDateTime.UtcNow.AddMinutes(1).IsFuture().Should().BeTrue();
+
+    [Fact]
+    public void IsFuture_PastDate_ReturnsFalse()
+        => SysDateTime.UtcNow.AddMinutes(-1).IsFuture().Should().BeFalse();
 
     // ── NextWorkday / PreviousWorkday ─────────────────────────────────────────
 

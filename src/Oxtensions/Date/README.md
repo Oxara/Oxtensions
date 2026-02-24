@@ -45,6 +45,17 @@ dt.ToUnixTimestamp();                      // 1740009600
 946684800L.FromUnixTimestamp();            // 2000-01-01 00:00:00 UTC
 dt.ToIso8601String();                      // "2026-02-20T00:00:00Z"
 new DateTime(1990, 5, 15).Age();           // years since 1990-05-15
+
+// Boolean checks
+dt.IsWeekday();                            // true  (Friday)
+dt.IsWeekend();                            // false
+new DateTime(2026, 2, 21).IsWeekend();     // true  (Saturday)
+new DateTime(2026, 2, 21).IsWeekday();     // false
+
+DateTime.UtcNow.AddDays(-1).IsPast();      // true
+DateTime.UtcNow.AddDays(1).IsFuture();     // true
+DateTime.UtcNow.AddDays(1).IsPast();       // false
+DateTime.UtcNow.AddDays(-1).IsFuture();    // false
 ```
 
 ---
@@ -81,6 +92,17 @@ date.EndOfMonth();                    // 2026-02-28
 date.ToDateTime();                    // 2026-02-20 00:00:00
 date.ToDateTime(new TimeOnly(9, 0));  // 2026-02-20 09:00:00
 new DateOnly(2024, 2, 1).EndOfMonth(); // 2024-02-29 (leap year)
+
+// Boolean checks
+date.IsWeekday();                     // true  (Friday)
+date.IsWeekend();                     // false
+new DateOnly(2026, 2, 21).IsWeekend();// true  (Saturday)
+new DateOnly(2026, 2, 21).IsWeekday();// false
+
+DateOnly.FromDateTime(DateTime.Today).AddDays(-1).IsPast();  // true
+DateOnly.FromDateTime(DateTime.Today).AddDays(1).IsFuture(); // true
+DateOnly.FromDateTime(DateTime.Today).AddDays(1).IsPast();   // false
+DateOnly.FromDateTime(DateTime.Today).AddDays(-1).IsFuture();// false
 ```
 
 ---
@@ -122,6 +144,17 @@ dto.EndOfMonth();                       // 2026-02-28 23:59:59.999 +03:00
 dto.ToIso8601String();                  // "2026-02-20T15:00:00+03:00"
 dto.ToUnixTimestamp();                  // Unix seconds
 946684800L.ToDateTimeOffset();          // 2000-01-01T00:00:00+00:00
+
+// Boolean checks
+dto.IsWeekday();                        // true  (Friday)
+dto.IsWeekend();                        // false
+new DateTimeOffset(2026, 2, 21, 0, 0, 0, offset).IsWeekend(); // true  (Saturday)
+new DateTimeOffset(2026, 2, 21, 0, 0, 0, offset).IsWeekday(); // false
+
+DateTimeOffset.UtcNow.AddDays(-1).IsPast();   // true
+DateTimeOffset.UtcNow.AddDays(1).IsFuture();  // true
+DateTimeOffset.UtcNow.AddDays(1).IsPast();    // false
+DateTimeOffset.UtcNow.AddDays(-1).IsFuture(); // false
 ```
 
 > **Key difference from `DateTime`:** All boundary methods on `DateTimeOffset` preserve the original UTC offset. A value at `+03:00` stays at `+03:00` after calling `StartOfDay()`, `EndOfYear()`, etc.
