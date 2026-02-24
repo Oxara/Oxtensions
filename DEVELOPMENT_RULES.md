@@ -28,21 +28,21 @@
 
 ---
 
-## ⚡ Quick Reference — Sık Kullanılan Komutlar
+## ⚡ Quick Reference — Common Commands
 
-### Testleri çalıştır
+### Run tests
 ```powershell
-dotnet test --configuration Release                        # tüm framework'ler (net6–net10)
-dotnet test --configuration Release --framework net10.0   # tek framework
-dotnet test --filter "ClassName=StringExtensionsTests"    # tek sınıf
+dotnet test --configuration Release                        # all frameworks (net6–net10)
+dotnet test --configuration Release --framework net10.0   # single framework
+dotnet test --filter "ClassName=StringExtensionsTests"    # single class
 ```
 
-### NuGet paketi oluştur
+### Build NuGet package
 ```powershell
 dotnet pack src/Oxtensions/Oxtensions.csproj -c Release -o ./nupkg
 ```
 
-### NuGet paketini yayınla (manuel)
+### Publish NuGet package (manual)
 ```powershell
 dotnet nuget push nupkg\Oxtensions.*.nupkg `
   --api-key <KEY> `
@@ -53,19 +53,19 @@ dotnet nuget push nupkg\Oxtensions.*.snupkg `
   --source https://api.nuget.org/v3/index.json
 ```
 
-### Yeni sürüm çıkar (CI otomatik yayınlar)
+### Release a new version (CI publishes automatically)
 ```powershell
-# 1. Oxtensions.csproj içindeki <Version> değerini güncelle
-# 2. CHANGELOG.md [Unreleased] → [x.y.z] - YYYY-MM-DD olarak güncelle
+# 1. Update <Version> in Oxtensions.csproj
+# 2. Update CHANGELOG.md [Unreleased] → [x.y.z] - YYYY-MM-DD
 git add src/Oxtensions/Oxtensions.csproj CHANGELOG.md
 git commit -m "chore: release vX.Y.Z"
 git push
 
 git tag vX.Y.Z
-git push origin vX.Y.Z   # ← bu tag CI'yi tetikler, gerisini CI halleder
+git push origin vX.Y.Z   # ← this tag triggers CI; CI takes care of the rest
 ```
 
-### Git — ilk kurulum (sadece bir kere)
+### Git — initial setup (one-time only)
 ```powershell
 git init
 git remote add origin https://github.com/Oxara/Oxtensions.git

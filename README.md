@@ -234,7 +234,7 @@ dotnet test --framework net10.0
 dotnet test --filter "ClassName=StringExtensionsTests"
 ```
 
-**Test coverage:** 676 tests across 5 frameworks (net6.0 · net7.0 · net8.0 · net9.0 · net10.0)
+**Test coverage:** 807 tests across 5 frameworks (net6.0 · net7.0 · net8.0 · net9.0 · net10.0)
 
 ---
 
