@@ -10,7 +10,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>Oxtensions</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Authors>Oxara</Authors>
     <Company>Oxara</Company>
     <Product>Oxtensions</Product>

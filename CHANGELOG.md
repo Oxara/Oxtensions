@@ -10,6 +10,28 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ---
 
+## [1.1.0] — 2026-02-24
+
+### Added
+
+- `Oxtensions.Collections.SetExtensions.IsNullOrEmpty()` — null-safe empty check for `ISet<T>`.
+- `Oxtensions.Collections.SetExtensions.AddRange(items)` — bulk add; returns the count of newly inserted elements.
+- `Oxtensions.Collections.SetExtensions.RemoveWhere(predicate)` — removes all elements matching the predicate; returns the count removed.
+- `Oxtensions.Collections.SetExtensions.ToSortedSet()` — creates a new `SortedSet<T>` from the set elements in ascending order.
+- `Oxtensions.Collections.SetExtensions.OverlapsWith(other)` — returns `true` when the set shares at least one element with the given sequence.
+- `Oxtensions.Collections.SetExtensions.SymmetricDifference(other)` — returns a new `HashSet<T>` containing elements exclusive to exactly one collection, without mutating the source.
+- `Oxtensions.Collections.ReadOnlyListExtensions.IsNullOrEmpty()` — null-safe empty check for `IReadOnlyList<T>` using `Count`.
+- `Oxtensions.Collections.ReadOnlyListExtensions.IndexOf(item)` — returns the zero-based index of the first matching element, or `-1`.
+- `Oxtensions.Collections.ReadOnlyListExtensions.LastIndexOf(item)` — returns the zero-based index of the last matching element, or `-1`.
+- `Oxtensions.Collections.ReadOnlyListExtensions.BinarySearch(value)` — binary search on a sorted `IReadOnlyList<T>`; returns the element index or the bitwise complement of the insertion point.
+- `Oxtensions.Collections.ReadOnlyListExtensions.Slice(start, length)` — returns a read-only sub-list covering the specified range.
+- `Oxtensions.Collections.ReadOnlyDictionaryExtensions.ContainsAllKeys(keys)` — returns `true` only when every supplied key is present.
+- `Oxtensions.Collections.ReadOnlyDictionaryExtensions.ContainsAnyKey(keys)` — returns `true` when at least one supplied key is present.
+- `Oxtensions.Collections.ReadOnlyDictionaryExtensions.ToDictionary()` — creates a mutable `Dictionary<TKey, TValue>` copy of the read-only dictionary.
+- `Oxtensions.Collections.ReadOnlyDictionaryExtensions.FilterByKeys(keys)` — returns a new dictionary containing only entries whose keys appear in the supplied key sequence.
+
+---
+
 ## [1.0.0] — 2026-02-24
 
 Initial release of Oxtensions — a high-performance, production-ready .NET extension methods library targeting net6.0 through net10.0.
@@ -158,5 +180,6 @@ Initial release of Oxtensions — a high-performance, production-ready .NET exte
 
 ---
 
-[Unreleased]: https://github.com/oxara/oxtensions/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/oxara/oxtensions/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/oxara/oxtensions/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/oxara/oxtensions/releases/tag/v1.0.0
