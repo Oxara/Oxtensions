@@ -10,6 +10,15 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ---
 
+## [1.1.2] — 2026-09-24
+
+### Fixed
+
+- `FireAndForget` hata callback testi sabit bir gecikme yerine callback tamamlanmasını bekleyecek şekilde senkronize edildi; yavaş CI runner'larındaki yalancı negatif kaldırıldı.
+- GitHub Actions'ın artık desteklemediği `include-prerelease` girdisi .NET matris kurulumundan kaldırıldı.
+
+---
+
 ## [1.1.1] — 2026-09-24
 
 ### Changed
@@ -191,7 +200,8 @@ Initial release of Oxtensions — a high-performance, production-ready .NET exte
 
 ---
 
-[Unreleased]: https://github.com/oxara/oxtensions/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/oxara/oxtensions/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/oxara/oxtensions/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/oxara/oxtensions/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/oxara/oxtensions/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/oxara/oxtensions/releases/tag/v1.0.0

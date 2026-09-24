@@ -31,7 +31,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ matrix.dotnet }}.x
-          include-prerelease: true
 
       - name: Restore
         run: dotnet restore

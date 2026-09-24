@@ -24,11 +24,12 @@ public sealed class TaskExtensions_FireAndForgetTests
     [Fact]
     public async Task FireAndForget_FaultedTask_InvokesErrorHandler()
     {
-        Exception? captured = null;
+        var captured = new TaskCompletionSource<Exception>(TaskCreationOptions.RunContinuationsAsynchronously);
         Task.FromException(new InvalidOperationException("oops"))
-            .FireAndForget(ex => captured = ex);
-        await Task.Delay(50);
-        captured.Should().BeOfType<InvalidOperationException>();
+            .FireAndForget(ex => captured.TrySetResult(ex));
+
+        var exception = await captured.Task.WaitAsync(System.TimeSpan.FromSeconds(5));
+        exception.Should().BeOfType<InvalidOperationException>();
     }
 }
 
