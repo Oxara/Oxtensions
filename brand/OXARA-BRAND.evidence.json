@@ -1,0 +1,143 @@
+{
+  "$schema": "../../oxara-devkit/tools/brand-governance/schemas/evidence.schema.json",
+  "schemaVersion": 1,
+  "applicationBoundary": {
+    "targetProduct": "Oxtensions",
+    "productOwner": "Oxtensions owner agent",
+    "objective": "Apply the centrally generated package Brand assets, approved ecosystem links and the user-requested patch release preparation without changing Oxtensions package behavior.",
+    "changedFiles": [
+      ".github/workflows/ci.yml",
+      "CHANGELOG.md",
+      "README.md",
+      "RELEASE.md",
+      "assets/oxtensions_banner.png",
+      "brand/OXARA-BRAND.evidence.json",
+      "icon.png",
+      "src/Oxtensions/Oxtensions.csproj"
+    ],
+    "changeTypes": [
+      "assets",
+      "media",
+      "documentation",
+      "release-preparation"
+    ],
+    "protectedAreas": [
+      "source implementation and tests",
+      "public API and namespaces",
+      "target frameworks",
+      "installation, API and example documentation"
+    ],
+    "explicitApprovals": [
+      "assets",
+      "media",
+      "documentation",
+      "release-preparation"
+    ]
+  },
+  "brandComplianceProfile": {
+    "contractPath": "../../Oxara.Brand/docs/PRODUCT-EXPERIENCE.md",
+    "contractSha256": "1d9db0214076e1216446efce6b0c65362f7f67e903c2c60903acfd720cc53f7d",
+    "profilePath": "../../Oxara.Brand/profiles/oxtensions-package.json",
+    "profileSha256": "524bd0fbebac5e97039c481a5bf4040f3948a159ef0b2bba2d4ff270fbeb16ca",
+    "profileId": "oxtensions-package",
+    "profileVersion": "1.0.0",
+    "manifestPath": "../../Oxara.Brand/exports/oxtensions-package/manifest.json",
+    "manifestSha256": "3e77a3b14a235b483e4df4fac8435a21cc7ed2db9c4b54532651d2fec4c884d0",
+    "provenanceStatus": "verified",
+    "literalBrandValues": false
+  },
+  "roles": {
+    "identityAccent": {
+      "source": "brand-contract"
+    },
+    "uiPrimary": {
+      "source": "brand-contract",
+      "contractEvidence": "Static package media has no interactive UI; Brand foreground/background roles are used unchanged.",
+      "lightRole": "not-applicable-static-media",
+      "darkRole": "not-applicable-static-media",
+      "foregroundRole": "white",
+      "foregroundEvidence": "Banner foreground resolves from the Brand white token on the Brand Ink surface.",
+      "contrast": {
+        "status": "verified",
+        "normalTextRatio": 19,
+        "evidence": "Static white-on-Ink package media exceeds the 4.5:1 normal-text requirement."
+      }
+    },
+    "documentAccent": {
+      "owner": "consumer",
+      "sharedTemplateLeakage": false,
+      "siteOwnedRoots": []
+    },
+    "siteTokenLeakage": {
+      "status": "verified",
+      "evidence": "The package consumer contains only manifest-mapped raster assets and no local Brand token definitions."
+    }
+  },
+  "workflow": {
+    "brandContract": "verified",
+    "productOwnerPilot": "complete",
+    "devkitAudit": "passed",
+    "userApproval": "approved",
+    "rollout": "ready"
+  },
+  "riskReview": {
+    "gradient": false,
+    "glow": false,
+    "pillHeading": false,
+    "buttonLikeHeading": false,
+    "ornamentalAccentBar": false,
+    "unnecessaryCardification": false,
+    "redesignByAccident": false,
+    "humanAestheticReview": {
+      "status": "approved",
+      "evidence": "User confirmed satisfaction with the current coordinated Brand outputs on 2026-09-24; later revisions are separate changes."
+    }
+  },
+  "media": {
+    "changed": true,
+    "profileId": "oxtensions-package",
+    "profileVersion": "1.0.0",
+    "profilePath": "../../Oxara.Brand/profiles/oxtensions-package.json",
+    "profileSha256": "524bd0fbebac5e97039c481a5bf4040f3948a159ef0b2bba2d4ff270fbeb16ca",
+    "manifestPath": "../../Oxara.Brand/exports/oxtensions-package/manifest.json",
+    "manifestSha256": "3e77a3b14a235b483e4df4fac8435a21cc7ed2db9c4b54532651d2fec4c884d0",
+    "provenanceStatus": "verified",
+    "publicUrlOwner": "consumer",
+    "metadataChangedFiles": [],
+    "outputs": [
+      {
+        "repoPath": "assets/oxtensions_banner.png",
+        "changeKind": "modify",
+        "filePath": "../assets/oxtensions_banner.png",
+        "path": "png/oxtensions-readme-banner.png",
+        "logicalAssetId": "oxtensions.readme-banner.png",
+        "context": "Oxtensions repository README banner",
+        "format": "png",
+        "type": "image/png",
+        "width": 1200,
+        "height": 630,
+        "alt": "Oxtensions .NET extension methods library by Oxara",
+        "metadataImagePath": "png/oxtensions-readme-banner.png",
+        "sha256": "1df873906f7d0c2d4f8ec33efef9d47824f57f8cc8731654bd12e6f753c5d6b5",
+        "openGraph": false
+      },
+      {
+        "repoPath": "icon.png",
+        "changeKind": "modify",
+        "filePath": "../icon.png",
+        "path": "png/oxtensions-nuget-icon-256.png",
+        "logicalAssetId": "oxtensions.nuget-icon.256",
+        "context": "Oxtensions NuGet package icon",
+        "format": "png",
+        "type": "image/png",
+        "width": 256,
+        "height": 256,
+        "alt": "Oxtensions package icon with the Oxara OX mark",
+        "metadataImagePath": "png/oxtensions-nuget-icon-256.png",
+        "sha256": "2a53a0c49df8f7df0c34675202d6f625b536e8d9813640159ae18118b044cf08",
+        "openGraph": false
+      }
+    ]
+  },
+  "exceptions": []
+}

@@ -10,6 +10,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ---
 
+## [1.1.1] — 2026-09-24
+
+### Changed
+
+- Paket ikonu ve README banner'ı canonical Oxara Brand exportlarıyla yenilendi.
+- README araç ekosistemi bölümüne Local Change Guard kaynak deposu ve VS Code Marketplace bağlantıları eklendi.
+- SourceLink build bağımlılığı, transitive güvenlik uyarısını kaldıran güncel sürüme yükseltildi.
+- NuGet publish işi .NET 10 SDK'ya sabitlendi ve tag/package sürüm uyuşmazlığını yayından önce reddeden kontrol eklendi.
+
+---
+
 ## [1.1.0] — 2026-02-24
 
 ### Added
@@ -180,6 +191,7 @@ Initial release of Oxtensions — a high-performance, production-ready .NET exte
 
 ---
 
-[Unreleased]: https://github.com/oxara/oxtensions/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/oxara/oxtensions/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/oxara/oxtensions/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/oxara/oxtensions/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/oxara/oxtensions/releases/tag/v1.0.0

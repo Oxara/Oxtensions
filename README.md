@@ -249,6 +249,12 @@ dotnet test --filter "ClassName=StringExtensionsTests"
 
 ---
 
+## 🧰 Other Oxara Tools
+
+- **[Local Change Guard](https://github.com/Oxara/Oxara.VsCode.LocalChangeGuard)** — Keep developer-local Git hunks separate from committable changes without hiding either from the worktree. [Install from the VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=oxara.local-change-guard).
+
+---
+
 ## 📄 License
 
 MIT © 2026 [Oxara](https://github.com/oxara)
